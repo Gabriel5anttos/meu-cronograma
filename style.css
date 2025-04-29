@@ -68,29 +68,4 @@ body {
   }
   
 
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-header {
-    background-color: #0077cc;
-    color: white;
-    padding: 1rem;
-    text-align: center;
-}
-.calendario {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-}
-section {
-    background-color: #f0f0f0;
-    padding: 1rem;
-    border-radius: 8px;
-}
-@media (max-width: 600px) {
-    .calendario {
-        grid-template-columns: 1fr;
-    }
-}
+    
