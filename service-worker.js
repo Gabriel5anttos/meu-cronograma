@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'cronograma-v1';
+const CACHE_NAME = 'cronograma-v1.1';
 const urlsToCache = [
   '/',
   '/index.html',
