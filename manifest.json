@@ -1,19 +1,10 @@
 {
-<<<<<<< HEAD
   "name": "Meu Cronograma ENEM 2025",
   "short_name": "Cronograma ENEM",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#007bff",
-=======
-  "name": "Meu Cronograma",
-  "short_name": "Cronograma",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0077cc",
->>>>>>> 350ae306fbf0f45a0838b62920426c7826176e74
+  "theme_color": "#007bff",
   "icons": [
     {
       "src": "icons/icon-192.png",
@@ -26,8 +17,4 @@
       "type": "image/png"
     }
   ]
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 350ae306fbf0f45a0838b62920426c7826176e74
