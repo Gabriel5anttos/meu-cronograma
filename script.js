@@ -1,3 +1,4 @@
+
 const calendar = document.getElementById("calendar");
 const monthTabs = document.getElementById("monthTabs");
 const startDate = new Date();
@@ -76,3 +77,8 @@ function showMonth(monthName) {
 
 // Mostrar primeiro mês ao abrir
 showMonth(Object.keys(allDays)[0]);
+
+const hoje = new Date();
+const diaSemana = hoje.getDay();
+document.querySelectorAll('main section')[diaSemana].style.backgroundColor = '#d1e7ff';
+
