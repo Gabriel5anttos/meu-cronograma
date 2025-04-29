@@ -1,5 +1,4 @@
-
-const CACHE_NAME = 'cronograma-v1.1';
+const CACHE_NAME = 'cronograma-v2'; // Versão 2 para forçar atualização
 const urlsToCache = [
   '/',
   '/index.html',
@@ -10,21 +9,35 @@ const urlsToCache = [
   '/icons/icon-512.png'
 ];
 
+// Instala o cache inicial
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
+// Atualiza o cache se necessário
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(name => {
+          if (name !== CACHE_NAME) {
+            return caches.delete(name);
+          }
+        })
+      );
+    })
+  );
+});
+
+// Serve arquivos do cache ou da internet
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
-});
-
-self.addEventListener('install', function(event) {
-  console.log('Service Worker instalado.');
-});
-self.addEventListener('fetch', function(event) {
-  console.log('Buscando:', event.request.url);
 });
