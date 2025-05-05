@@ -4,6 +4,51 @@ body {
   margin: 0;
   padding: 0;
 }
+.calendar {
+  text-align: center;
+  margin: 20px auto;
+  max-width: 400px;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+.day {
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.day:hover {
+  background-color: #cde4f7;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+}
+.close {
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+}
 
 header {
   background-color: #1a73e8;
