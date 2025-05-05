@@ -49,3 +49,63 @@ function updateProgress() {
   const percent = total === 0 ? 0 : (checked / total) * 100;
   document.getElementById("progressFill").style.width = percent + "%";
 }
+const checklistData = [
+  "Matemática: Funções",
+  "Português: Interpretação de Texto",
+  "História: Era Vargas",
+  "Física: Leis de Newton",
+  "Química: Ligações Químicas"
+];
+
+const calendarDays = document.getElementById('calendarDays');
+const monthYear = document.getElementById('monthYear');
+const checklistModal = document.getElementById('checklistModal');
+const selectedDateEl = document.getElementById('selectedDate');
+const checklistItems = document.getElementById('checklistItems');
+const closeModal = document.querySelector('.close');
+
+// Gera o calendário do mês atual
+const today = new Date();
+const month = today.getMonth();
+const year = today.getFullYear();
+
+function renderCalendar() {
+  monthYear.textContent = `${today.toLocaleString('default', { month: 'long' })} ${year}`;
+  calendarDays.innerHTML = "";
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const totalDays = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    calendarDays.innerHTML += `<div></div>`;
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    const btn = document.createElement("div");
+    btn.className = "day";
+    btn.textContent = day;
+    btn.addEventListener("click", () => openChecklist(day));
+    calendarDays.appendChild(btn);
+  }
+}
+
+function openChecklist(day) {
+  selectedDateEl.textContent = `${day}/${month + 1}/${year}`;
+  checklistItems.innerHTML = "";
+
+  checklistData.forEach(item => {
+    const li = document.createElement("li");
+    li.innerHTML = `<input type="checkbox" /> ${item}`;
+    checklistItems.appendChild(li);
+  });
+
+  checklistModal.style.display = "block";
+}
+
+closeModal.onclick = () => checklistModal.style.display = "none";
+window.onclick = (e) => {
+  if (e.target == checklistModal) checklistModal.style.display = "none";
+};
+
+renderCalendar();
+
