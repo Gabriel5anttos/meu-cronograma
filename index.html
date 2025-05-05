@@ -15,17 +15,22 @@
   </header>
 
   <main>
-    <div class="calendar" id="calendar"></div>
+    <div class="calendar">
+  <h2 id="monthYear"></h2>
+  <div class="days" id="calendarDays"></div>
+</div>
 
-    <div class="modal" id="dayModal">
-      <div class="modal-content">
-        <span class="close-button" id="closeModal">&times;</span>
-        <h2>Checklist do Dia <span id="selectedDay"></span></h2>
-        <ul id="checklist">
-          <!-- Itens do checklist aparecerão aqui -->
-        </ul>
-      </div>
-    </div>
+<!-- Modal para o checklist -->
+<div id="checklistModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Checklist de Estudos - <span id="selectedDate"></span></h3>
+    <ul id="checklistItems">
+      <!-- Itens serão inseridos via JS -->
+    </ul>
+  </div>
+</div>
+
   </main>
 </body>
 
