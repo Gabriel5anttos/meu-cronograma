@@ -56,6 +56,24 @@ body {
 .day-button:hover {
   background-color: #bbdefb;
 }
+.day-card {
+  width: 200px;
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.day-card:hover {
+  background-color: #f0f8ff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
 
   .day-card {
     background: white;
