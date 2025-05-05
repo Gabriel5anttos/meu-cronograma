@@ -43,6 +43,20 @@ body {
     gap: 1rem;
     padding: 1rem;
   }
+.day-button {
+  margin: 5px;
+  padding: 10px 15px;
+  background-color: #e3f2fd;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.day-button:hover {
+  background-color: #bbdefb;
+}
+
   .day-card {
     background: white;
     width: 250px;
