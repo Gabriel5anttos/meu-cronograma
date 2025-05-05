@@ -1,42 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cronograma de Estudos</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
+
 <body>
   <header>
-    <h1>Meu Cronograma</h1>
+    <h1>Cronograma de Estudos</h1>
   </header>
 
-  <main class="calendar">
-    <!-- Botões dos dias -->
-    <div class="days">
-      <!-- Exemplo com 7 dias, você pode duplicar para mais -->
-      <button class="day-btn" onclick="openChecklist(1)">Dia 1</button>
-      <button class="day-btn" onclick="openChecklist(2)">Dia 2</button>
-      <button class="day-btn" onclick="openChecklist(3)">Dia 3</button>
-      <button class="day-btn" onclick="openChecklist(4)">Dia 4</button>
-      <button class="day-btn" onclick="openChecklist(5)">Dia 5</button>
-      <button class="day-btn" onclick="openChecklist(6)">Dia 6</button>
-      <button class="day-btn" onclick="openChecklist(7)">Dia 7</button>
-    </div>
-  </main>
+  <main>
+    <div class="calendar" id="calendar"></div>
 
-  <!-- Modal com checklist -->
-  <div id="checklistModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeChecklist()">&times;</span>
-      <h2 id="modalTitle">Conteúdos do Dia</h2>
-      <ul id="checklist"></ul>
-      <div class="progress-bar">
-        <div id="progressFill"></div>
+    <div class="modal" id="dayModal">
+      <div class="modal-content">
+        <span class="close-button" id="closeModal">&times;</span>
+        <h2>Checklist do Dia <span id="selectedDay"></span></h2>
+        <ul id="checklist">
+          <!-- Itens do checklist aparecerão aqui -->
+        </ul>
       </div>
     </div>
-  </div>
-
-  <script src="script.js"></script>
+  </main>
 </body>
+
 </html>
