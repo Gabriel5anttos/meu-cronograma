@@ -1,90 +1,51 @@
-
-const calendar = document.getElementById("calendar");
-const monthTabs = document.getElementById("monthTabs");
-const startDate = new Date();
-const endDate = new Date("2025-11-16");
-
-const rotina = {
-  domingo: ["08:00–10:00: EBD", "18:00–20:00: Culto", "14:00–15:30: Estudo (Humanas)"],
-  segunda: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "18:30–21:00: Faculdade", "21:15–22:15: Estudo (Natureza)"],
-  terca: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "18:30–21:00: Faculdade", "21:15–22:15: Estudo (Matemática)"],
-  quarta: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "16:30–18:00: Matéria Online", "21:00–22:00: Estudo (Linguagens)"],
-  quinta: ["07:30–11:30: Trabalho", "18:30–21:00: Faculdade (JavaPOO)"],
-  sexta: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "20:00–21:00: Estudo (Redação)"],
-  sabado: ["14:00–15:30: Estudo (Revisão)", "18:00–20:00: Encontro de Jovens"]
+// Simula os conteúdos por dia
+const conteudosPorDia = {
+  1: ["Matemática: Funções", "Português: Interpretação", "História: Brasil Colônia"],
+  2: ["Biologia: Ecologia", "Geografia: Climas", "Química: Ligações Químicas"],
+  3: ["Redação: Estrutura", "Física: Leis de Newton", "Matemática: Equações"],
+  4: ["Português: Gramática", "Química: Reações", "Geografia: Cartografia"],
+  5: ["História: Ditadura", "Física: Cinemática", "Biologia: Genética"],
+  6: ["Matemática: Porcentagem", "Português: Redação", "História: Primeira República"],
+  7: ["Física: Energia", "Geografia: População", "Biologia: Corpo Humano"]
 };
 
-function getWeekdayName(date) {
-  return ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"][date.getDay()];
-}
+let diaAtual = null;
 
-function getMonthName(month) {
-  const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"];
-  return meses[month];
-}
+function openChecklist(dia) {
+  diaAtual = dia;
+  const modal = document.getElementById("checklistModal");
+  const checklist = document.getElementById("checklist");
+  const title = document.getElementById("modalTitle");
+  checklist.innerHTML = "";
+  title.textContent = `Conteúdos do Dia ${dia}`;
 
-function openChecklist(date) {
-  console.log("Abrindo checklist para: " + date);
-  // Em breve: exibir modal com checklist baseado na data
-}
-
-
-const allDays = {};
-
-let tempDate = new Date(startDate);
-while (tempDate <= endDate) {
-  const dayName = getWeekdayName(tempDate);
-  const monthYear = `${getMonthName(tempDate.getMonth())} ${tempDate.getFullYear()}`;
-  if (!allDays[monthYear]) allDays[monthYear] = [];
-  
-  allDays[monthYear].push({
-    date: new Date(tempDate),
-    tasks: rotina[dayName] || []
+  const conteudos = conteudosPorDia[dia];
+  conteudos.forEach((item, index) => {
+    const li = document.createElement("li");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `item-${dia}-${index}`;
+    checkbox.onchange = updateProgress;
+    const label = document.createElement("label");
+    label.htmlFor = checkbox.id;
+    label.textContent = " " + item;
+    li.appendChild(checkbox);
+    li.appendChild(label);
+    checklist.appendChild(li);
   });
-  
-  tempDate.setDate(tempDate.getDate() + 1);
+
+  updateProgress();
+  modal.style.display = "block";
 }
 
-Object.keys(allDays).forEach((monthName, idx) => {
-  const btn = document.createElement("button");
-  btn.textContent = monthName;
-  if (idx === 0) btn.classList.add("active");
-  btn.onclick = () => {
-    document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    showMonth(monthName);
-  };
-  monthTabs.appendChild(btn);
-});
-
-function showMonth(monthName) {
-  calendar.innerHTML = "";
-  const today = new Date();
-  allDays[monthName].forEach(day => {
-    const card = document.createElement("div");
-    card.className = "day-card";
-    
-    if (day.date.toDateString() === today.toDateString()) {
-      card.classList.add("today");
-    }
-
-    card.innerHTML = `<h2>${day.date.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })}</h2>`;
-    
-    day.tasks.forEach(task => {
-      const div = document.createElement("div");
-      div.className = "task";
-      div.textContent = task;
-      card.appendChild(div);
-    });
-
-    calendar.appendChild(card);
-  });
+function closeChecklist() {
+  document.getElementById("checklistModal").style.display = "none";
 }
 
-// Mostrar primeiro mês ao abrir
-showMonth(Object.keys(allDays)[0]);
-
-const hoje = new Date();
-const diaSemana = hoje.getDay();
-document.querySelectorAll('main section')[diaSemana].style.backgroundColor = '#d1e7ff';
-
+function updateProgress() {
+  const checkboxes = document.querySelectorAll("#checklist input[type=checkbox]");
+  const total = checkboxes.length;
+  const checked = Array.from(checkboxes).filter(c => c.checked).length;
+  const percent = total === 0 ? 0 : (checked / total) * 100;
+  document.getElementById("progressFill").style.width = percent + "%";
+}
