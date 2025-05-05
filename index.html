@@ -1,60 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meu Cronograma ENEM 2025</title>
+  <title>Cronograma de Estudos</title>
   <link rel="stylesheet" href="style.css" />
-
-  <link rel="manifest" href="manifest.json" />
-<link rel="icon" href="icons/icon-192.png" />
-<meta name="theme-color" content="#007bff" />
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js');
-    });
-  }
-</script>
-
 </head>
 <body>
   <header>
-    <h1>📚 Meu Cronograma ENEM 2025</h1>
-    <p>De agora até 16/11/2025</p>
+    <h1>Meu Cronograma</h1>
   </header>
-  
-  <div class="calendar">
-  <button class="day-card" onclick="openChecklist('2025-05-04')">
-  <strong>dom., 04/05</strong><br>
-  08:00–10:00: EBD<br>
-  18:00–20:00: Culto<br>
-  14:00–15:30: Estudo (Humanas)
-</button>
 
-</div>
-  
+  <main class="calendar">
+    <!-- Botões dos dias -->
+    <div class="days">
+      <!-- Exemplo com 7 dias, você pode duplicar para mais -->
+      <button class="day-btn" onclick="openChecklist(1)">Dia 1</button>
+      <button class="day-btn" onclick="openChecklist(2)">Dia 2</button>
+      <button class="day-btn" onclick="openChecklist(3)">Dia 3</button>
+      <button class="day-btn" onclick="openChecklist(4)">Dia 4</button>
+      <button class="day-btn" onclick="openChecklist(5)">Dia 5</button>
+      <button class="day-btn" onclick="openChecklist(6)">Dia 6</button>
+      <button class="day-btn" onclick="openChecklist(7)">Dia 7</button>
+    </div>
+  </main>
 
-  <main id="calendar"></main>
-
-  <footer>
-    <p>Organizado com base na sua rotina</p>
-  </footer>
+  <!-- Modal com checklist -->
+  <div id="checklistModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeChecklist()">&times;</span>
+      <h2 id="modalTitle">Conteúdos do Dia</h2>
+      <ul id="checklist"></ul>
+      <div class="progress-bar">
+        <div id="progressFill"></div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Cronograma Semanal</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-</head>
-<body>
-    
-    <script src="script.js"></script>
-</body>
-</html>
-
