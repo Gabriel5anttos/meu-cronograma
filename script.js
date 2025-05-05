@@ -22,10 +22,12 @@ function getMonthName(month) {
   const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"];
   return meses[month];
 }
+
 function openChecklist(date) {
-  alert("Abrir checklist para o dia: " + date);
-  // aqui depois adicionaremos o sistema de checklist
+  console.log("Abrindo checklist para: " + date);
+  // Em breve: exibir modal com checklist baseado na data
 }
+
 
 const allDays = {};
 
