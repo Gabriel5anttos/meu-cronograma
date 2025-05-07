@@ -1,111 +1,134 @@
-// Simula os conteúdos por dia
-const conteudosPorDia = {
-  1: ["Matemática: Funções", "Português: Interpretação", "História: Brasil Colônia"],
-  2: ["Biologia: Ecologia", "Geografia: Climas", "Química: Ligações Químicas"],
-  3: ["Redação: Estrutura", "Física: Leis de Newton", "Matemática: Equações"],
-  4: ["Português: Gramática", "Química: Reações", "Geografia: Cartografia"],
-  5: ["História: Ditadura", "Física: Cinemática", "Biologia: Genética"],
-  6: ["Matemática: Porcentagem", "Português: Redação", "História: Primeira República"],
-  7: ["Física: Energia", "Geografia: População", "Biologia: Corpo Humano"]
+
+const calendar = document.getElementById("calendar");
+const monthTabs = document.getElementById("monthTabs");
+const startDate = new Date();
+const endDate = new Date("2025-11-16");
+
+const rotina = {
+  domingo: ["08:00–10:00: EBD", "18:00–20:00: Culto", "14:00–15:30: Estudo (Humanas)"],
+  segunda: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "18:30–21:00: Faculdade", "21:15–22:15: Estudo (Natureza)"],
+  terca: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "18:30–21:00: Faculdade", "21:15–22:15: Estudo (Matemática)"],
+  quarta: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "16:30–18:00: Matéria Online", "21:00–22:00: Estudo (Linguagens)"],
+  quinta: ["07:30–11:30: Trabalho", "18:30–21:00: Faculdade (JavaPOO)"],
+  sexta: ["07:30–11:30: Trabalho", "15:30–17:00: Academia", "20:00–21:00: Estudo (Redação)"],
+  sabado: ["14:00–15:30: Estudo (Revisão)", "18:00–20:00: Encontro de Jovens"]
 };
 
-let diaAtual = null;
+function getWeekdayName(date) {
+  return ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"][date.getDay()];
+}
 
-function openChecklist(dia) {
-  diaAtual = dia;
-  const modal = document.getElementById("checklistModal");
-  const checklist = document.getElementById("checklist");
-  const title = document.getElementById("modalTitle");
-  checklist.innerHTML = "";
-  title.textContent = `Conteúdos do Dia ${dia}`;
+function getMonthName(month) {
+  const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro"];
+  return meses[month];
+}
 
-  const conteudos = conteudosPorDia[dia];
-  conteudos.forEach((item, index) => {
-    const li = document.createElement("li");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.id = `item-${dia}-${index}`;
-    checkbox.onchange = updateProgress;
-    const label = document.createElement("label");
-    label.htmlFor = checkbox.id;
-    label.textContent = " " + item;
-    li.appendChild(checkbox);
-    li.appendChild(label);
-    checklist.appendChild(li);
+const allDays = {};
+
+let tempDate = new Date(startDate);
+while (tempDate <= endDate) {
+  const dayName = getWeekdayName(tempDate);
+  const monthYear = `${getMonthName(tempDate.getMonth())} ${tempDate.getFullYear()}`;
+  if (!allDays[monthYear]) allDays[monthYear] = [];
+  
+  allDays[monthYear].push({
+    date: new Date(tempDate),
+    tasks: rotina[dayName] || []
   });
-
-  updateProgress();
-  modal.style.display = "block";
+  
+  tempDate.setDate(tempDate.getDate() + 1);
 }
 
-function closeChecklist() {
-  document.getElementById("checklistModal").style.display = "none";
+Object.keys(allDays).forEach((monthName, idx) => {
+  const btn = document.createElement("button");
+  btn.textContent = monthName;
+  if (idx === 0) btn.classList.add("active");
+  btn.onclick = () => {
+    document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    showMonth(monthName);
+  };
+  monthTabs.appendChild(btn);
+});
+
+function showMonth(monthName) {
+  calendar.innerHTML = "";
+  const today = new Date();
+  allDays[monthName].forEach(day => {
+    const card = document.createElement("div");
+    card.className = "day-card";
+    
+    if (day.date.toDateString() === today.toDateString()) {
+      card.classList.add("today");
+    }
+
+    card.innerHTML = `<h2>${day.date.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })}</h2>`;
+    
+    day.tasks.forEach(task => {
+      const div = document.createElement("div");
+      div.className = "task";
+      div.textContent = task;
+      card.appendChild(div);
+    });
+
+    card.onclick = () => openChecklist(day);
+calendar.appendChild(card);
+
+  });
 }
+// Modal
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const checklistContainer = document.getElementById("checklistContainer");
+const closeModal = document.getElementById("closeModal");
 
-function updateProgress() {
-  const checkboxes = document.querySelectorAll("#checklist input[type=checkbox]");
-  const total = checkboxes.length;
-  const checked = Array.from(checkboxes).filter(c => c.checked).length;
-  const percent = total === 0 ? 0 : (checked / total) * 100;
-  document.getElementById("progressFill").style.width = percent + "%";
-}
-const checklistData = [
-  "Matemática: Funções",
-  "Português: Interpretação de Texto",
-  "História: Era Vargas",
-  "Física: Leis de Newton",
-  "Química: Ligações Químicas"
-];
+closeModal.onclick = () => modal.classList.add("hidden");
 
-const calendarDays = document.getElementById('calendarDays');
-const monthYear = document.getElementById('monthYear');
-const checklistModal = document.getElementById('checklistModal');
-const selectedDateEl = document.getElementById('selectedDate');
-const checklistItems = document.getElementById('checklistItems');
-const closeModal = document.querySelector('.close');
-
-// Gera o calendário do mês atual
-const today = new Date();
-const month = today.getMonth();
-const year = today.getFullYear();
-
-function renderCalendar() {
-  monthYear.textContent = `${today.toLocaleString('default', { month: 'long' })} ${year}`;
-  calendarDays.innerHTML = "";
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const totalDays = new Date(year, month + 1, 0).getDate();
-
-  for (let i = 0; i < firstDay; i++) {
-    calendarDays.innerHTML += `<div></div>`;
-  }
-
-  for (let day = 1; day <= totalDays; day++) {
-    const btn = document.createElement("div");
-    btn.className = "day";
-    btn.textContent = day;
-    btn.addEventListener("click", () => openChecklist(day));
-    calendarDays.appendChild(btn);
-  }
+function getStorageKey(date) {
+  return `checklist_${date.toDateString()}`;
 }
 
 function openChecklist(day) {
-  selectedDateEl.textContent = `${day}/${month + 1}/${year}`;
-  checklistItems.innerHTML = "";
+  const key = getStorageKey(day.date);
+  const saved = JSON.parse(localStorage.getItem(key)) || {};
+  
+  modalTitle.textContent = `Checklist – ${day.date.toLocaleDateString("pt-BR")}`;
+  checklistContainer.innerHTML = "";
 
-  checklistData.forEach(item => {
+  // Mostrar apenas tarefas que envolvam estudo
+const studyTasks = day.tasks.filter(task => 
+  /Estudo|Matéria|Revisão|Redação/i.test(task)
+);
+
+studyTasks.forEach((task, idx) => {
+
     const li = document.createElement("li");
-    li.innerHTML = `<input type="checkbox" /> ${item}`;
-    checklistItems.appendChild(li);
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `chk_${idx}`;
+    checkbox.checked = saved[task] || false;
+
+    checkbox.onchange = () => {
+      saved[task] = checkbox.checked;
+      localStorage.setItem(key, JSON.stringify(saved));
+    };
+
+    const label = document.createElement("label");
+    label.htmlFor = `chk_${idx}`;
+    label.textContent = task;
+
+    li.appendChild(checkbox);
+    li.appendChild(label);
+    checklistContainer.appendChild(li);
   });
 
-  checklistModal.style.display = "block";
+  modal.classList.remove("hidden");
 }
 
-closeModal.onclick = () => checklistModal.style.display = "none";
-window.onclick = (e) => {
-  if (e.target == checklistModal) checklistModal.style.display = "none";
-};
+// Mostrar primeiro mês ao abrir
+showMonth(Object.keys(allDays)[0]);
 
-renderCalendar();
+const hoje = new Date();
+const diaSemana = hoje.getDay();
+document.querySelectorAll('main section')[diaSemana].style.backgroundColor = '#d1e7ff';
 
