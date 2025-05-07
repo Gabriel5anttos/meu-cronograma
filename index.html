@@ -1,37 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cronograma de Estudos</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
-</head>
 
-<body>
-  <header>
-    <h1>Cronograma de Estudos</h1>
-  </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Cronograma ENEM 2025</title>
+  <link rel="stylesheet" href="style.css" />
 
-  <main>
-    <div class="calendar">
-  <h2 id="monthYear"></h2>
-  <div class="days" id="calendarDays"></div>
-</div>
-
-<!-- Modal para o checklist -->
-<div id="checklistModal" class="modal">
+  <link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<meta name="theme-color" content="#007bff" />
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js');
+    });
+  }
+</script>
+<div id="modal" class="modal hidden">
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <h3>Checklist de Estudos - <span id="selectedDate"></span></h3>
-    <ul id="checklistItems">
-      <!-- Itens serão inseridos via JS -->
-    </ul>
+    <span id="closeModal" class="close-button">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <ul id="checklistContainer"></ul>
   </div>
 </div>
 
-  </main>
-</body>
+</head>
+<body>
+  <header>
+    <h1>📚 Meu Cronograma ENEM 2025</h1>
+    <p>De agora até 16/11/2025</p>
+  </header>
 
+  <div class="tabs" id="monthTabs"></div>
+
+  <main id="calendar"></main>
+
+  <footer>
+    <p>Organizado com base na sua rotina</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
 </html>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Cronograma Semanal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
